@@ -1,5 +1,9 @@
 import { FC, useEffect, useState } from "react";
-import { getBreeds, searchDogs, fetchDogsByIds } from "../../api";
+import { getBreeds, searchDogs, fetchDogsByIds, getMatch } from "../../api";
+import { useFavoritesContext } from "../../context/useFavoritesContext";
+import SearchControls from "./SearchControls";
+import PaginationControls from "./PaginationControls";
+import DogList from "./DogList";
 
 interface Dog {
   id: string;
@@ -11,22 +15,30 @@ interface Dog {
 }
 
 const SearchPage: FC = () => {
+  // Favorites from global context
+  const { favorites, addFavorite, removeFavorite } = useFavoritesContext();
+
+  // Breed searching
   const [allBreeds, setAllBreeds] = useState<string[]>([]);
   const [selectedBreed, setSelectedBreed] = useState("");
 
-  const [breedSortOrder, setBreedSortOrder] = useState<"asc" | "desc">("asc");
+  // Sorting
+  const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc");
 
+  // Dogs & pagination
   const [dogs, setDogs] = useState<Dog[]>([]);
   const [from, setFrom] = useState(0);
   const size = 10;
   const [total, setTotal] = useState(0);
 
+  // Fetch all possible breeds on mount
   useEffect(() => {
     getBreeds()
       .then((breeds) => setAllBreeds(breeds))
       .catch((err) => console.error("Failed to fetch breeds:", err));
   }, []);
 
+  // Main search function
   const handleSearch = async (newFrom = 0) => {
     try {
       const params: {
@@ -37,7 +49,7 @@ const SearchPage: FC = () => {
       } = {
         size,
         from: newFrom,
-        sort: `breed:${breedSortOrder}`,
+        sort: `breed:${sortOrder}`,
       };
 
       if (selectedBreed) {
@@ -56,11 +68,17 @@ const SearchPage: FC = () => {
     }
   };
 
+  // Auto-research on sort change
+  useEffect(() => {
+    handleSearch(from);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [sortOrder]);
+
+  // Pagination
   const handlePrev = () => {
     const newFrom = Math.max(0, from - size);
     handleSearch(newFrom);
   };
-
   const handleNext = () => {
     const newFrom = from + size;
     if (newFrom < total) {
@@ -68,64 +86,64 @@ const SearchPage: FC = () => {
     }
   };
 
-  useEffect(() => {
-    handleSearch(from);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [breedSortOrder]);
+  // Toggle a dog's favorite status
+  const handleToggleFavorite = (dogId: string) => {
+    if (favorites.includes(dogId)) {
+      removeFavorite(dogId);
+    } else {
+      addFavorite(dogId);
+    }
+  };
+
+  // Generate match from favorites
+  const handleGenerateMatch = async () => {
+    try {
+      const matchId = await getMatch(favorites);
+      const [matchedDog] = await fetchDogsByIds([matchId]);
+      alert(`Your match is: ${matchedDog.name}, a ${matchedDog.breed}!`);
+    } catch (err) {
+      console.error("Failed to generate match:", err);
+    }
+  };
 
   return (
-    <div>
+    <div style={{ padding: "1rem" }}>
       <h2>Search Dogs</h2>
 
-      <label htmlFor="breed-select">Breed: </label>
-      <select
-        id="breed-select"
-        value={selectedBreed}
-        onChange={(e) => {
-          setSelectedBreed(e.target.value);
-        }}
+      {/* Search Controls (Breed filter, Sort, Search) */}
+      <SearchControls
+        allBreeds={allBreeds}
+        selectedBreed={selectedBreed}
+        onBreedChange={(b) => setSelectedBreed(b)}
+        sortOrder={sortOrder}
+        onSortChange={(o) => setSortOrder(o)}
+        onSearch={() => handleSearch(0)}
+      />
+
+      {/* Generate Match Button */}
+      <button
+        onClick={handleGenerateMatch}
+        disabled={favorites.length === 0}
+        style={{ marginTop: "1rem" }}
       >
-        <option value="">All Breeds</option>
-        {allBreeds.map((b) => (
-          <option key={b} value={b}>
-            {b}
-          </option>
-        ))}
-      </select>
+        Generate Match
+      </button>
 
-      <label htmlFor="breed-sort-select">Sort by Breed: </label>
-      <select
-        id="breed-sort-select"
-        value={breedSortOrder}
-        onChange={(e) => setBreedSortOrder(e.target.value as "asc" | "desc")}
-      >
-        <option value="asc">Ascending (A → Z)</option>
-        <option value="desc">Descending (Z → A)</option>
-      </select>
+      {/* Pagination Controls */}
+      <PaginationControls
+        from={from}
+        size={size}
+        total={total}
+        onPrev={handlePrev}
+        onNext={handleNext}
+      />
 
-      <button onClick={() => handleSearch(0)}>Search</button>
-
-      <div>
-        <p>Total results: {total}</p>
-        <button onClick={handlePrev} disabled={from === 0}>
-          Prev
-        </button>
-        <button onClick={handleNext} disabled={from + size >= total}>
-          Next
-        </button>
-      </div>
-
-      <ul>
-        {dogs.map((dog) => (
-          <li key={dog.id}>
-            <h3>{dog.name}</h3>
-            <p>Breed: {dog.breed}</p>
-            <p>Age: {dog.age}</p>
-            <p>Zip Code: {dog.zip_code}</p>
-            {dog.img && <img src={dog.img} alt={dog.name} />}
-          </li>
-        ))}
-      </ul>
+      {/* Dog List */}
+      <DogList
+        dogs={dogs}
+        favorites={favorites}
+        onToggleFavorite={handleToggleFavorite}
+      />
     </div>
   );
 };
