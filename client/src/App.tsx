@@ -1,8 +1,17 @@
+import { Route, Routes } from "react-router-dom";
+import { FC } from "react";
+import LoginPage from "./pages/Login/LoginPage";
+
+const SearchPagePlaceholder: FC = () => {
+  return <h1>Search Page Placeholder</h1>;
+};
+
 const App = () => {
   return (
-    <div>
-      <h1>Fetch App</h1>
-    </div>
+    <Routes>
+      <Route path="/login" element={<LoginPage />} />
+      <Route path="/search" element={<SearchPagePlaceholder />} />
+    </Routes>
   );
 };
 
