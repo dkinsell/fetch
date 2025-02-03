@@ -18,42 +18,71 @@ const SearchPage: FC = () => {
   // Favorites from global context
   const { favorites, addFavorite, removeFavorite } = useFavoritesContext();
 
-  // Breed searching
+  // All possible breeds and multi-select state
   const [allBreeds, setAllBreeds] = useState<string[]>([]);
-  const [selectedBreed, setSelectedBreed] = useState("");
+  const [selectedBreeds, setSelectedBreeds] = useState<string[]>([]);
 
-  // Sorting
+  // Advanced sorting state
+  const [sortField, setSortField] = useState<"breed" | "name" | "age">("breed");
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc");
 
-  // Dogs & pagination
+  // Age range filtering state
+  const [ageMin, setAgeMin] = useState<number | undefined>(undefined);
+  const [ageMax, setAgeMax] = useState<number | undefined>(undefined);
+
+  // Location filtering state (ZIP codes as comma-separated string)
+  const [zipCodes, setZipCodes] = useState<string>("");
+
+  // Dogs and pagination state
   const [dogs, setDogs] = useState<Dog[]>([]);
   const [from, setFrom] = useState(0);
   const size = 10;
   const [total, setTotal] = useState(0);
 
-  // Fetch all possible breeds on mount
+  // Fetch the list of breeds on mount
   useEffect(() => {
     getBreeds()
       .then((breeds) => setAllBreeds(breeds))
       .catch((err) => console.error("Failed to fetch breeds:", err));
   }, []);
 
-  // Main search function
+  /**
+   * Main search function:
+   * Incorporates multi-select breeds, age range, location, and advanced sorting.
+   */
   const handleSearch = async (newFrom = 0) => {
     try {
       const params: {
         breeds?: string[];
+        zipCodes?: string[];
+        ageMin?: number;
+        ageMax?: number;
         size: number;
         from: number;
         sort: string;
       } = {
         size,
         from: newFrom,
-        sort: `breed:${sortOrder}`,
+        sort: `${sortField}:${sortOrder}`, // Use the selected sort field and order
       };
 
-      if (selectedBreed) {
-        params.breeds = [selectedBreed];
+      if (selectedBreeds.length > 0) {
+        params.breeds = selectedBreeds;
+      }
+
+      // Process ZIP codes if provided
+      if (zipCodes.trim() !== "") {
+        params.zipCodes = zipCodes
+          .split(",")
+          .map((z) => z.trim())
+          .filter((z) => z !== "");
+      }
+
+      if (ageMin !== undefined) {
+        params.ageMin = ageMin;
+      }
+      if (ageMax !== undefined) {
+        params.ageMax = ageMax;
       }
 
       const searchResult = await searchDogs(params);
@@ -68,22 +97,35 @@ const SearchPage: FC = () => {
     }
   };
 
-  // Auto-research on sort change
-  useEffect(() => {
-    handleSearch(from);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [sortOrder]);
-
-  // Pagination
+  // Pagination handlers
   const handlePrev = () => {
     const newFrom = Math.max(0, from - size);
     handleSearch(newFrom);
   };
+
   const handleNext = () => {
     const newFrom = from + size;
     if (newFrom < total) {
       handleSearch(newFrom);
     }
+  };
+
+  // Re-run search when sort field or sort order changes
+  useEffect(() => {
+    handleSearch(from);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [sortField, sortOrder]);
+
+  // Reset filters to their default values and re-run the search
+  const handleResetFilters = () => {
+    setSelectedBreeds([]);
+    setAgeMin(undefined);
+    setAgeMax(undefined);
+    setZipCodes("");
+    // Optionally, you can also reset sortField and sortOrder to defaults:
+    // setSortField('breed');
+    // setSortOrder('asc');
+    handleSearch(0);
   };
 
   // Toggle a dog's favorite status
@@ -95,7 +137,7 @@ const SearchPage: FC = () => {
     }
   };
 
-  // Generate match from favorites
+  // Generate a match from favorites
   const handleGenerateMatch = async () => {
     try {
       const matchId = await getMatch(favorites);
@@ -110,14 +152,23 @@ const SearchPage: FC = () => {
     <div style={{ padding: "1rem" }}>
       <h2>Search Dogs</h2>
 
-      {/* Search Controls (Breed filter, Sort, Search) */}
+      {/* Search Controls with multi-select, age range, location, sorting, and filter reset */}
       <SearchControls
         allBreeds={allBreeds}
-        selectedBreed={selectedBreed}
-        onBreedChange={(b) => setSelectedBreed(b)}
+        selectedBreeds={selectedBreeds}
+        onBreedChange={(breeds) => setSelectedBreeds(breeds)}
+        sortField={sortField}
+        onSortFieldChange={(field) => setSortField(field)}
         sortOrder={sortOrder}
-        onSortChange={(o) => setSortOrder(o)}
+        onSortOrderChange={(order) => setSortOrder(order)}
         onSearch={() => handleSearch(0)}
+        onResetFilters={handleResetFilters}
+        ageMin={ageMin}
+        ageMax={ageMax}
+        onAgeMinChange={setAgeMin}
+        onAgeMaxChange={setAgeMax}
+        zipCodes={zipCodes}
+        onZipCodesChange={setZipCodes}
       />
 
       {/* Generate Match Button */}
