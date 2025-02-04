@@ -32,7 +32,7 @@ const LoginPage: FC = () => {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-100">
+    <div className="flex items-center justify-center min-h-screen bg-gradient-to-b from-slate-50 to-slate-100">
       <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
         <h2 className="text-2xl font-bold text-center mb-6">Login</h2>
         {error && <p className="text-red-500 text-center mb-4">{error}</p>}
@@ -66,7 +66,7 @@ const LoginPage: FC = () => {
           <button
             type="submit"
             disabled={loading}
-            className="w-full py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition"
+            className="w-full py-2 bg-teal-600 text-white rounded-lg hover:bg-teal-700 transition"
           >
             {loading ? "Logging in..." : "Log In"}
           </button>

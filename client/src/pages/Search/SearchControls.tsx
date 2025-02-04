@@ -55,7 +55,7 @@ const SearchControls: FC<SearchControlsProps> = ({
   return (
     <div className="flex flex-col gap-4">
       {/* Filter Options */}
-      <div className="p-4 border border-gray-200 rounded">
+      <div className="bg-white rounded-xl shadow-sm p-6 mb-4">
         <h3 className="text-lg font-semibold mb-2">Filter Options</h3>
         <div className="flex flex-wrap gap-4 items-center">
           {/* Multi-Select for Breeds */}
@@ -128,7 +128,7 @@ const SearchControls: FC<SearchControlsProps> = ({
       </div>
 
       {/* Sorting Options */}
-      <div className="p-4 border border-gray-200 rounded">
+      <div className="bg-white rounded-xl shadow-sm p-6 mb-4">
         <h3 className="text-lg font-semibold mb-2">Sorting Options</h3>
         <div className="flex flex-wrap gap-4 items-center">
           <div className="flex flex-col">
@@ -171,13 +171,13 @@ const SearchControls: FC<SearchControlsProps> = ({
       <div className="flex gap-4">
         <button
           onClick={onSearch}
-          className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition"
+          className="px-4 py-2 bg-teal-600 text-white rounded hover:bg-teal-700 transition"
         >
           Search
         </button>
         <button
           onClick={onResetFilters}
-          className="px-4 py-2 bg-gray-300 text-gray-800 rounded hover:bg-gray-400 transition"
+          className="px-4 py-2 bg-gray-200 text-gray-800 rounded hover:bg-gray-300 transition"
         >
           Reset Filters
         </button>

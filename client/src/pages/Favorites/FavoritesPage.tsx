@@ -118,7 +118,7 @@ const FavoritesPage: FC = () => {
               </div>
               <button
                 onClick={() => handleRemoveFavorite(dog.id)}
-                className="w-full mt-4 py-3 bg-white border-t border-slate-100 text-red-500 font-medium hover:bg-red-50 transition-colors duration-200 rounded-b-xl"
+                className="w-full mt-4 py-3 bg-white border-t border-slate-100 text-rose-600 font-medium hover:bg-rose-50 transition-colors duration-200 rounded-b-xl"
               >
                 Remove from Favorites
               </button>

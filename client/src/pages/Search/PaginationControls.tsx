@@ -16,11 +16,11 @@ const PaginationControls: FC<PaginationControlsProps> = ({
   onNext,
 }) => {
   return (
-    <div className="flex justify-between items-center">
+    <div className="bg-white rounded-xl shadow-sm p-4 flex justify-between items-center">
       <button
         onClick={onPrev}
         disabled={from === 0}
-        className="px-4 py-2 bg-blue-500 text-white rounded disabled:opacity-50 disabled:cursor-not-allowed hover:bg-blue-600 transition"
+        className="px-4 py-2 bg-teal-600 text-white rounded-lg disabled:opacity-50 disabled:cursor-not-allowed hover:bg-teal-700 transition"
       >
         Prev
       </button>
@@ -30,7 +30,7 @@ const PaginationControls: FC<PaginationControlsProps> = ({
       <button
         onClick={onNext}
         disabled={from + size >= total}
-        className="px-4 py-2 bg-blue-500 text-white rounded disabled:opacity-50 disabled:cursor-not-allowed hover:bg-blue-600 transition"
+        className="px-4 py-2 bg-teal-600 text-white rounded-lg disabled:opacity-50 disabled:cursor-not-allowed hover:bg-teal-700 transition"
       >
         Next
       </button>

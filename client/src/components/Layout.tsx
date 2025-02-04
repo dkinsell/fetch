@@ -7,10 +7,10 @@ interface LayoutProps {
 
 const Layout: FC<LayoutProps> = ({ children }) => {
   return (
-    <div className="flex flex-col min-h-screen font-sans">
+    <div className="flex flex-col min-h-screen font-sans bg-gradient-to-b from-slate-50 to-slate-100">
       <Header />
       <main className="flex-grow container mx-auto p-4">{children}</main>
-      <footer className="bg-gray-100 border-t border-gray-300 text-center py-4">
+      <footer className="bg-white shadow-sm text-center py-4">
         © {new Date().getFullYear()} Fetch Dogs
       </footer>
     </div>

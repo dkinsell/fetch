@@ -1,4 +1,3 @@
-// src/pages/Search/DogList.tsx
 import { FC } from "react";
 
 interface Dog {
@@ -24,28 +23,38 @@ const DogList: FC<DogListProps> = ({ dogs, favorites, onToggleFavorite }) => {
         return (
           <div
             key={dog.id}
-            className="border rounded-lg p-4 shadow-sm flex flex-col"
+            className="group bg-white rounded-xl shadow-sm hover:shadow-md transition-all duration-300 ease-out flex flex-col"
           >
-            <h3 className="text-lg font-semibold mb-1">{dog.name}</h3>
-            <p className="text-gray-700">Breed: {dog.breed}</p>
-            <p className="text-gray-700">Age: {dog.age}</p>
-            <p className="text-gray-700">ZIP: {dog.zip_code}</p>
-            {dog.img && (
-              <div className="w-full aspect-[4/3] overflow-hidden my-2 rounded">
-                <img
-                  src={dog.img}
-                  alt={dog.name}
-                  className="w-full h-full object-contain"
-                />
+            <div className="p-5 flex-grow">
+              {dog.img && (
+                <div className="w-full h-64 overflow-hidden rounded-lg relative bg-white border border-slate-200">
+                  <img
+                    src={dog.img}
+                    alt={dog.name}
+                    className="block w-full h-full object-cover"
+                  />
+                </div>
+              )}
+              <div className="pt-4">
+                <h3 className="text-xl font-semibold text-slate-800 mb-1">
+                  {dog.name}
+                </h3>
+                <div className="flex flex-wrap gap-2 text-sm text-slate-600">
+                  <span className="bg-slate-100 px-2 py-1 rounded-md">
+                    {dog.breed}
+                  </span>
+                  <span className="bg-slate-100 px-2 py-1 rounded-md">
+                    Age: {dog.age}
+                  </span>
+                  <span className="bg-slate-100 px-2 py-1 rounded-md">
+                    ZIP: {dog.zip_code}
+                  </span>
+                </div>
               </div>
-            )}
+            </div>
             <button
               onClick={() => onToggleFavorite(dog.id)}
-              className={`mt-auto py-2 rounded transition text-white ${
-                isFav
-                  ? "bg-red-500 hover:bg-red-600"
-                  : "bg-green-500 hover:bg-green-600"
-              }`}
+              className="w-full mt-auto py-3 bg-white border-t border-slate-100 text-rose-600 font-medium hover:bg-rose-50 transition-colors duration-200 rounded-b-xl"
             >
               {isFav ? "Remove Favorite" : "Add Favorite"}
             </button>

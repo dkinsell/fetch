@@ -18,7 +18,7 @@ const Header: FC = () => {
   };
 
   return (
-    <header className="bg-gray-100 border-b border-gray-300 px-6 py-4 flex items-center justify-between">
+    <header className="bg-white shadow-sm rounded-b-xl px-6 py-4 flex items-center justify-between">
       {/* Left side: Branding and navigation */}
       <div className="flex items-center gap-4">
         <h1 className="text-xl font-bold">Fetch Dogs</h1>
@@ -26,11 +26,11 @@ const Header: FC = () => {
           <nav>
             <Link
               to="/search"
-              className="text-gray-700 hover:text-blue-600 mr-4"
+              className="text-gray-700 hover:text-teal-600 mr-4"
             >
               Search
             </Link>
-            <Link to="/favorites" className="text-gray-700 hover:text-blue-600">
+            <Link to="/favorites" className="text-gray-700 hover:text-teal-600">
               Favorites
             </Link>
           </nav>
@@ -42,7 +42,7 @@ const Header: FC = () => {
           <span className="text-gray-800">Welcome, {userName}</span>
           <button
             onClick={handleLogout}
-            className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+            className="px-4 py-2 bg-teal-600 text-white rounded-lg hover:bg-teal-700 transition-colors duration-200"
           >
             Logout
           </button>
