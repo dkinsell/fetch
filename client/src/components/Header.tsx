@@ -1,10 +1,10 @@
 import { FC } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { useUserContext } from "../context/useUserContext";
 import { logout } from "../api";
-import { useNavigate } from "react-router-dom";
 
 const Header: FC = () => {
-  const { isAuthenticated, clearUserInfo, userName } = useUserContext();
+  const { isAuthenticated, userName, clearUserInfo } = useUserContext();
   const navigate = useNavigate();
 
   const handleLogout = async () => {
@@ -22,6 +22,14 @@ const Header: FC = () => {
       {isAuthenticated && (
         <div>
           <span>Welcome, {userName}</span>
+          <nav style={{ marginLeft: "1rem" }}>
+            <Link to="/search" style={{ marginRight: "1rem" }}>
+              Search
+            </Link>
+            <Link to="/favorites" style={{ marginRight: "1rem" }}>
+              Favorites
+            </Link>
+          </nav>
           <button onClick={handleLogout} style={{ marginLeft: "1rem" }}>
             Logout
           </button>
