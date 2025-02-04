@@ -1,18 +1,16 @@
-// src/App.tsx
 import { FC } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 import LoginPage from "./pages/Login/LoginPage";
 import SearchPage from "./pages/Search/SearchPage";
 import FavoritesPage from "./pages/Favorites/FavoritesPage";
-import Header from "./components/Header";
+import Layout from "./components/Layout";
 import { useUserContext } from "./context/useUserContext";
 
 const App: FC = () => {
   const { isAuthenticated } = useUserContext();
 
   return (
-    <div>
-      <Header />
+    <Layout>
       <Routes>
         <Route
           path="/login"
@@ -43,7 +41,7 @@ const App: FC = () => {
           }
         />
       </Routes>
-    </div>
+    </Layout>
   );
 };
 

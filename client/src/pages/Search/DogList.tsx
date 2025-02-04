@@ -17,30 +17,39 @@ interface DogListProps {
 
 const DogList: FC<DogListProps> = ({ dogs, favorites, onToggleFavorite }) => {
   return (
-    <ul style={{ listStyleType: "none", padding: 0, marginTop: "1rem" }}>
+    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
       {dogs.map((dog) => {
         const isFav = favorites.includes(dog.id);
-
         return (
-          <li
+          <div
             key={dog.id}
-            style={{ marginBottom: "1rem", borderBottom: "1px solid #ccc" }}
+            className="border rounded-lg p-4 shadow-sm flex flex-col"
           >
-            <h3>{dog.name}</h3>
-            <p>Breed: {dog.breed}</p>
-            <p>Age: {dog.age}</p>
-            <p>Zip Code: {dog.zip_code}</p>
+            <h3 className="text-lg font-semibold mb-1">{dog.name}</h3>
+            <p className="text-gray-700">Breed: {dog.breed}</p>
+            <p className="text-gray-700">Age: {dog.age}</p>
+            <p className="text-gray-700">ZIP: {dog.zip_code}</p>
             {dog.img && (
-              <img src={dog.img} alt={dog.name} style={{ width: 150 }} />
+              <img
+                src={dog.img}
+                alt={dog.name}
+                className="w-full h-40 object-cover my-2 rounded"
+              />
             )}
-
-            <button onClick={() => onToggleFavorite(dog.id)}>
-              {isFav ? "Remove from Favorites" : "Add to Favorites"}
+            <button
+              onClick={() => onToggleFavorite(dog.id)}
+              className={`mt-auto py-2 rounded ${
+                isFav
+                  ? "bg-red-500 hover:bg-red-600"
+                  : "bg-green-500 hover:bg-green-600"
+              } text-white transition`}
+            >
+              {isFav ? "Remove Favorite" : "Add Favorite"}
             </button>
-          </li>
+          </div>
         );
       })}
-    </ul>
+    </div>
   );
 };
 

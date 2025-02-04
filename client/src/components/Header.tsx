@@ -18,19 +18,32 @@ const Header: FC = () => {
   };
 
   return (
-    <header style={{ padding: "1rem", borderBottom: "1px solid #ccc" }}>
-      {isAuthenticated && (
-        <div>
-          <span>Welcome, {userName}</span>
-          <nav style={{ marginLeft: "1rem" }}>
-            <Link to="/search" style={{ marginRight: "1rem" }}>
+    <header className="bg-gray-100 border-b border-gray-300 px-6 py-4 flex items-center justify-between">
+      {/* Left side: Branding and navigation */}
+      <div className="flex items-center gap-4">
+        <h1 className="text-xl font-bold">Fetch Dogs</h1>
+        {isAuthenticated && (
+          <nav>
+            <Link
+              to="/search"
+              className="text-gray-700 hover:text-blue-600 mr-4"
+            >
               Search
             </Link>
-            <Link to="/favorites" style={{ marginRight: "1rem" }}>
+            <Link to="/favorites" className="text-gray-700 hover:text-blue-600">
               Favorites
             </Link>
           </nav>
-          <button onClick={handleLogout} style={{ marginLeft: "1rem" }}>
+        )}
+      </div>
+      {/* Right side: User greeting and logout */}
+      {isAuthenticated && (
+        <div className="flex items-center gap-4">
+          <span className="text-gray-800">Welcome, {userName}</span>
+          <button
+            onClick={handleLogout}
+            className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+          >
             Logout
           </button>
         </div>

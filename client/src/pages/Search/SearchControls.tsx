@@ -41,131 +41,147 @@ const SearchControls: FC<SearchControlsProps> = ({
   zipCodes,
   onZipCodesChange,
 }) => {
-  // Convert the list of breeds into react-select options
+  // Convert allBreeds into options for react-select
   const options: Option[] = allBreeds.map((breed) => ({
     value: breed,
     label: breed,
   }));
 
-  // Determine which options are currently selected
+  // Determine which options are selected
   const selectedOptions = options.filter((option) =>
     selectedBreeds.includes(option.value)
   );
 
   return (
-    <div
-      style={{
-        display: "flex",
-        flexWrap: "wrap",
-        gap: "1rem",
-        alignItems: "center",
-      }}
-    >
-      {/* Multi-Select for Breeds */}
-      <div>
-        <label htmlFor="breed-select" style={{ marginRight: "0.5rem" }}>
-          Breed:
-        </label>
-        <div style={{ minWidth: "200px" }}>
-          <Select
-            id="breed-select"
-            isMulti
-            options={options}
-            value={selectedOptions}
-            onChange={(selected) => {
-              const values = selected ? selected.map((opt) => opt.value) : [];
-              onBreedChange(values);
-            }}
-            placeholder="Select breed(s)..."
-          />
+    <div className="flex flex-col gap-4">
+      {/* Filter Options */}
+      <div className="p-4 border border-gray-200 rounded">
+        <h3 className="text-lg font-semibold mb-2">Filter Options</h3>
+        <div className="flex flex-wrap gap-4 items-center">
+          {/* Multi-Select for Breeds */}
+          <div className="flex flex-col">
+            <label htmlFor="breed-select" className="mb-1 font-medium">
+              Breed
+            </label>
+            <div className="min-w-[200px]">
+              <Select
+                id="breed-select"
+                isMulti
+                options={options}
+                value={selectedOptions}
+                onChange={(selected) => {
+                  const values = selected
+                    ? selected.map((opt) => opt.value)
+                    : [];
+                  onBreedChange(values);
+                }}
+                placeholder="Select breed(s)..."
+              />
+            </div>
+          </div>
+          {/* Age Range */}
+          <div className="flex flex-col">
+            <label htmlFor="age-min" className="mb-1 font-medium">
+              Min Age
+            </label>
+            <input
+              id="age-min"
+              type="number"
+              value={ageMin !== undefined ? ageMin : ""}
+              onChange={(e) => {
+                const val = e.target.value;
+                onAgeMinChange(val === "" ? undefined : Number(val));
+              }}
+              className="w-20 p-2 border border-gray-300 rounded"
+            />
+          </div>
+          <div className="flex flex-col">
+            <label htmlFor="age-max" className="mb-1 font-medium">
+              Max Age
+            </label>
+            <input
+              id="age-max"
+              type="number"
+              value={ageMax !== undefined ? ageMax : ""}
+              onChange={(e) => {
+                const val = e.target.value;
+                onAgeMaxChange(val === "" ? undefined : Number(val));
+              }}
+              className="w-20 p-2 border border-gray-300 rounded"
+            />
+          </div>
+          {/* ZIP Codes */}
+          <div className="flex flex-col">
+            <label htmlFor="zip-codes" className="mb-1 font-medium">
+              ZIP Codes
+            </label>
+            <input
+              id="zip-codes"
+              type="text"
+              value={zipCodes}
+              onChange={(e) => onZipCodesChange(e.target.value)}
+              placeholder="Comma-separated"
+              className="w-48 p-2 border border-gray-300 rounded"
+            />
+          </div>
         </div>
       </div>
 
-      {/* Age Range Filtering */}
-      <div>
-        <label htmlFor="age-min" style={{ marginRight: "0.5rem" }}>
-          Min Age:
-        </label>
-        <input
-          id="age-min"
-          type="number"
-          value={ageMin !== undefined ? ageMin : ""}
-          onChange={(e) => {
-            const val = e.target.value;
-            onAgeMinChange(val === "" ? undefined : Number(val));
-          }}
-          style={{ width: "80px" }}
-        />
-      </div>
-      <div>
-        <label htmlFor="age-max" style={{ marginRight: "0.5rem" }}>
-          Max Age:
-        </label>
-        <input
-          id="age-max"
-          type="number"
-          value={ageMax !== undefined ? ageMax : ""}
-          onChange={(e) => {
-            const val = e.target.value;
-            onAgeMaxChange(val === "" ? undefined : Number(val));
-          }}
-          style={{ width: "80px" }}
-        />
-      </div>
-
-      {/* Location Filtering by ZIP Codes */}
-      <div>
-        <label htmlFor="zip-codes" style={{ marginRight: "0.5rem" }}>
-          ZIP Codes:
-        </label>
-        <input
-          id="zip-codes"
-          type="text"
-          value={zipCodes}
-          onChange={(e) => onZipCodesChange(e.target.value)}
-          placeholder="Enter ZIP codes, comma-separated"
-          style={{ width: "200px" }}
-        />
+      {/* Sorting Options */}
+      <div className="p-4 border border-gray-200 rounded">
+        <h3 className="text-lg font-semibold mb-2">Sorting Options</h3>
+        <div className="flex flex-wrap gap-4 items-center">
+          <div className="flex flex-col">
+            <label htmlFor="sort-field-select" className="mb-1 font-medium">
+              Sort Field
+            </label>
+            <select
+              id="sort-field-select"
+              value={sortField}
+              onChange={(e) =>
+                onSortFieldChange(e.target.value as "breed" | "name" | "age")
+              }
+              className="p-2 border border-gray-300 rounded"
+            >
+              <option value="breed">Breed</option>
+              <option value="name">Name</option>
+              <option value="age">Age</option>
+            </select>
+          </div>
+          <div className="flex flex-col">
+            <label htmlFor="sort-order-select" className="mb-1 font-medium">
+              Sort Order
+            </label>
+            <select
+              id="sort-order-select"
+              value={sortOrder}
+              onChange={(e) =>
+                onSortOrderChange(e.target.value as "asc" | "desc")
+              }
+              className="p-2 border border-gray-300 rounded"
+            >
+              <option value="asc">Ascending (A → Z / Low → High)</option>
+              <option value="desc">Descending (Z → A / High → Low)</option>
+            </select>
+          </div>
+        </div>
       </div>
 
-      {/* Advanced Sorting Controls */}
-      <div>
-        <label htmlFor="sort-field-select" style={{ marginRight: "0.5rem" }}>
-          Sort Field:
-        </label>
-        <select
-          id="sort-field-select"
-          value={sortField}
-          onChange={(e) =>
-            onSortFieldChange(e.target.value as "breed" | "name" | "age")
-          }
-          style={{ marginRight: "1rem" }}
+      {/* Action Buttons */}
+      <div className="flex gap-4">
+        <button
+          onClick={onSearch}
+          className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition"
         >
-          <option value="breed">Breed</option>
-          <option value="name">Name</option>
-          <option value="age">Age</option>
-        </select>
-      </div>
-      <div>
-        <label htmlFor="sort-order-select" style={{ marginRight: "0.5rem" }}>
-          Sort Order:
-        </label>
-        <select
-          id="sort-order-select"
-          value={sortOrder}
-          onChange={(e) => onSortOrderChange(e.target.value as "asc" | "desc")}
-          style={{ marginRight: "1rem" }}
+          Search
+        </button>
+        <button
+          onClick={onResetFilters}
+          className="px-4 py-2 bg-gray-300 text-gray-800 rounded hover:bg-gray-400 transition"
         >
-          <option value="asc">Ascending (A → Z / Low → High)</option>
-          <option value="desc">Descending (Z → A / High → Low)</option>
-        </select>
+          Reset Filters
+        </button>
       </div>
-
-      {/* Search and Reset Buttons */}
-      <button onClick={onSearch}>Search</button>
-      <button onClick={onResetFilters} style={{ backgroundColor: "#eee" }}>
-        Reset Filters
-      </button>
     </div>
   );
 };
