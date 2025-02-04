@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
 import { fetchDogsByIds, getMatch } from "../../api";
 import { useNavigate } from "react-router-dom";
-import { useFavoritesContext } from "../../context/useFavoritesContext";
+import { useFavoritesContext } from "../../context/Favorites/useFavoritesContext";
 import { Dog } from "../../types";
+import DogCard from "../../components/DogCard";
 
 const FavoritesPage = () => {
   const { favorites, removeFavorite } = useFavoritesContext();
@@ -79,44 +80,12 @@ const FavoritesPage = () => {
       ) : (
         <div className="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mb-12">
           {favoriteDogs.map((dog) => (
-            <div
+            <DogCard
               key={dog.id}
-              className="group bg-white rounded-xl shadow-sm hover:shadow-md transition-all duration-300 ease-out"
-            >
-              <div className="p-5">
-                <div className="w-full h-64 overflow-hidden rounded-lg relative bg-white border border-slate-200">
-                  {dog.img && (
-                    <img
-                      src={dog.img}
-                      alt={dog.name}
-                      className="block w-full h-full object-cover"
-                    />
-                  )}
-                </div>
-                <div className="pt-4">
-                  <h3 className="text-xl font-semibold text-slate-800 mb-1">
-                    {dog.name}
-                  </h3>
-                  <div className="flex flex-wrap gap-2 text-sm text-slate-600">
-                    <span className="bg-slate-100 px-2 py-1 rounded-md">
-                      {dog.breed}
-                    </span>
-                    <span className="bg-slate-100 px-2 py-1 rounded-md">
-                      Age: {dog.age}
-                    </span>
-                    <span className="bg-slate-100 px-2 py-1 rounded-md">
-                      ZIP: {dog.zip_code}
-                    </span>
-                  </div>
-                </div>
-              </div>
-              <button
-                onClick={() => handleRemoveFavorite(dog.id)}
-                className="w-full mt-4 py-3 bg-white border-t border-slate-100 text-rose-600 font-medium hover:bg-rose-50 transition-colors duration-200 rounded-b-xl"
-              >
-                Remove from Favorites
-              </button>
-            </div>
+              dog={dog}
+              buttonText="Remove from Favorites"
+              onAction={handleRemoveFavorite}
+            />
           ))}
         </div>
       )}

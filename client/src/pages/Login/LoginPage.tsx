@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useUserContext } from "../../context/useUserContext";
+import { useUserContext } from "../../context/User/useUserContext";
 import { login } from "../../api";
+import FormField from "../../components/FormField";
 
 const LoginPage = () => {
   const navigate = useNavigate();
@@ -37,32 +38,21 @@ const LoginPage = () => {
         <h2 className="text-2xl font-bold text-center mb-6">Login</h2>
         {error && <p className="text-red-500 text-center mb-4">{error}</p>}
         <form onSubmit={handleSubmit} className="space-y-4">
-          <div>
-            <label className="block font-medium" htmlFor="name">
-              Name:
-            </label>
-            <input
-              id="name"
-              type="text"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              required
-              className="mt-1 w-full p-2 border border-gray-300 rounded"
-            />
-          </div>
-          <div>
-            <label className="block font-medium" htmlFor="email">
-              Email:
-            </label>
-            <input
-              id="email"
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-              className="mt-1 w-full p-2 border border-gray-300 rounded"
-            />
-          </div>
+          <FormField
+            id="name"
+            label="Name:"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            required
+          />
+          <FormField
+            id="email"
+            label="Email:"
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+          />
           <button
             type="submit"
             disabled={loading}

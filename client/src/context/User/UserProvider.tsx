@@ -1,7 +1,6 @@
-// src/context/UserProvider.tsx
 import { useState, useEffect, FC, ReactNode } from "react";
 import { UserContext } from "./UserContext";
-import { getBreeds } from "../api"; // Protected endpoint
+import { getBreeds } from "../../api"; // Protected endpoint
 
 export const UserProvider: FC<{ children: ReactNode }> = ({ children }) => {
   const [userName, setUserName] = useState<string | null>(null);

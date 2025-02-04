@@ -7,13 +7,12 @@ const PaginationControls = ({
   onPrev,
   onNext,
 }: PaginationControlsProps) => {
+  const buttonClass =
+    "px-4 py-2 bg-teal-600 text-white rounded-lg disabled:opacity-50 disabled:cursor-not-allowed hover:bg-teal-700 transition";
+
   return (
     <div className="bg-white rounded-xl shadow-sm p-4 flex justify-between items-center">
-      <button
-        onClick={onPrev}
-        disabled={from === 0}
-        className="px-4 py-2 bg-teal-600 text-white rounded-lg disabled:opacity-50 disabled:cursor-not-allowed hover:bg-teal-700 transition"
-      >
+      <button onClick={onPrev} disabled={from === 0} className={buttonClass}>
         Prev
       </button>
       <span className="text-gray-700">
@@ -22,7 +21,7 @@ const PaginationControls = ({
       <button
         onClick={onNext}
         disabled={from + size >= total}
-        className="px-4 py-2 bg-teal-600 text-white rounded-lg disabled:opacity-50 disabled:cursor-not-allowed hover:bg-teal-700 transition"
+        className={buttonClass}
       >
         Next
       </button>

@@ -34,10 +34,15 @@ const SearchControls = ({
     selectedBreeds.includes(option.value)
   );
 
+  // Local reusable Card component to wrap sections with common styling
+  const Card = ({ children }: { children: React.ReactNode }) => (
+    <div className="bg-white rounded-xl shadow-sm p-6 mb-4">{children}</div>
+  );
+
   return (
     <div className="flex flex-col gap-4">
       {/* Filter Options */}
-      <div className="bg-white rounded-xl shadow-sm p-6 mb-4">
+      <Card>
         <h3 className="text-lg font-semibold mb-2">Filter Options</h3>
         <div className="flex flex-wrap gap-4 items-center">
           {/* Multi-Select for Breeds */}
@@ -92,7 +97,7 @@ const SearchControls = ({
               className="w-20 p-2 border border-gray-300 rounded"
             />
           </div>
-          {/* ZIP Codes */}
+          {/* Zip Codes */}
           <div className="flex flex-col">
             <label htmlFor="zip-codes" className="mb-1 font-medium">
               ZIP Codes
@@ -102,28 +107,28 @@ const SearchControls = ({
               type="text"
               value={zipCodes}
               onChange={(e) => onZipCodesChange(e.target.value)}
-              placeholder="Comma-separated"
-              className="w-48 p-2 border border-gray-300 rounded"
+              placeholder="Separate with commas"
+              className="w-40 p-2 border border-gray-300 rounded"
             />
           </div>
         </div>
-      </div>
+      </Card>
 
       {/* Sorting Options */}
-      <div className="bg-white rounded-xl shadow-sm p-6 mb-4">
+      <Card>
         <h3 className="text-lg font-semibold mb-2">Sorting Options</h3>
         <div className="flex flex-wrap gap-4 items-center">
           <div className="flex flex-col">
-            <label htmlFor="sort-field-select" className="mb-1 font-medium">
+            <label htmlFor="sort-field" className="mb-1 font-medium">
               Sort Field
             </label>
             <select
-              id="sort-field-select"
+              id="sort-field"
               value={sortField}
               onChange={(e) =>
                 onSortFieldChange(e.target.value as "breed" | "name" | "age")
               }
-              className="p-2 border border-gray-300 rounded"
+              className="w-40 p-2 border border-gray-300 rounded"
             >
               <option value="breed">Breed</option>
               <option value="name">Name</option>
@@ -131,35 +136,35 @@ const SearchControls = ({
             </select>
           </div>
           <div className="flex flex-col">
-            <label htmlFor="sort-order-select" className="mb-1 font-medium">
+            <label htmlFor="sort-order" className="mb-1 font-medium">
               Sort Order
             </label>
             <select
-              id="sort-order-select"
+              id="sort-order"
               value={sortOrder}
               onChange={(e) =>
                 onSortOrderChange(e.target.value as "asc" | "desc")
               }
-              className="p-2 border border-gray-300 rounded"
+              className="w-40 p-2 border border-gray-300 rounded"
             >
-              <option value="asc">Ascending (A → Z / Low → High)</option>
-              <option value="desc">Descending (Z → A / High → Low)</option>
+              <option value="asc">Ascending</option>
+              <option value="desc">Descending</option>
             </select>
           </div>
         </div>
-      </div>
+      </Card>
 
       {/* Action Buttons */}
       <div className="flex gap-4">
         <button
           onClick={onSearch}
-          className="px-4 py-2 bg-teal-600 text-white rounded hover:bg-teal-700 transition"
+          className="px-4 py-2 bg-teal-600 text-white rounded-lg hover:bg-teal-700 transition"
         >
           Search
         </button>
         <button
           onClick={onResetFilters}
-          className="px-4 py-2 bg-gray-200 text-gray-800 rounded hover:bg-gray-300 transition"
+          className="px-4 py-2 bg-gray-300 text-gray-800 rounded-lg hover:bg-gray-400 transition"
         >
           Reset Filters
         </button>

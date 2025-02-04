@@ -19,14 +19,14 @@ const AdoptionPage = () => {
       </div>
       <div className="bg-white rounded-xl shadow-sm p-6 text-center">
         <h3 className="text-2xl font-bold text-slate-800 mb-4">
-          A thank you from my dog
+          A thank you from Olly
         </h3>
         <p className="text-slate-600 mb-4">
           Thank you for exploring the website! Here's a picture of my dog Olly
           on his first birthday (extra I know) to show my appreciation.
         </p>
         <img
-          src="/Olly.jpg"
+          src="/Olly2.jpg"
           alt="My Dog"
           className="w-full h-auto rounded-xl shadow-sm mx-auto"
         />

@@ -4,7 +4,8 @@ import SearchPage from "./pages/Search/SearchPage";
 import FavoritesPage from "./pages/Favorites/FavoritesPage";
 import AdoptionPage from "./pages/Adoption/AdoptionPage";
 import Layout from "./components/Layout";
-import { useUserContext } from "./context/useUserContext";
+import { useUserContext } from "./context/User/useUserContext";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 const App = () => {
   const { isAuthenticated } = useUserContext();
@@ -15,33 +16,31 @@ const App = () => {
         <Route
           path="/login"
           element={
-            isAuthenticated ? <Navigate to="/search" replace /> : <LoginPage />
+            !isAuthenticated ? <LoginPage /> : <Navigate to="/search" replace />
           }
         />
         <Route
           path="/search"
           element={
-            isAuthenticated ? <SearchPage /> : <Navigate to="/login" replace />
+            <ProtectedRoute>
+              <SearchPage />
+            </ProtectedRoute>
           }
         />
         <Route
           path="/favorites"
           element={
-            isAuthenticated ? (
+            <ProtectedRoute>
               <FavoritesPage />
-            ) : (
-              <Navigate to="/login" replace />
-            )
+            </ProtectedRoute>
           }
         />
         <Route
           path="/adopt"
           element={
-            isAuthenticated ? (
+            <ProtectedRoute>
               <AdoptionPage />
-            ) : (
-              <Navigate to="/login" replace />
-            )
+            </ProtectedRoute>
           }
         />
         <Route

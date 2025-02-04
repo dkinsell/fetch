@@ -1,6 +1,6 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { getBreeds, searchDogs, fetchDogsByIds } from "../../api";
-import { useFavoritesContext } from "../../context/useFavoritesContext";
+import { useFavoritesContext } from "../../context/Favorites/useFavoritesContext";
 import SearchControls from "./SearchControls";
 import PaginationControls from "./PaginationControls";
 import DogList from "./DogList";
@@ -35,9 +35,9 @@ const SearchPage = () => {
       .catch((err) => console.error("Failed to fetch breeds:", err));
   }, []);
 
-  const handleSearch = async (newFrom = 0) => {
-    setError(null);
-    try {
+  // Helper function to build search parameters based on current filters
+  const buildSearchParams = useCallback(
+    (newFrom: number) => {
       const params: {
         breeds?: string[];
         zipCodes?: string[];
@@ -51,7 +51,6 @@ const SearchPage = () => {
         from: newFrom,
         sort: `${sortField}:${sortOrder}`,
       };
-
       if (selectedBreeds.length > 0) {
         params.breeds = selectedBreeds;
       }
@@ -67,19 +66,29 @@ const SearchPage = () => {
       if (ageMax !== undefined) {
         params.ageMax = ageMax;
       }
+      return params;
+    },
+    [selectedBreeds, sortField, sortOrder, ageMin, ageMax, zipCodes, size]
+  );
 
-      const searchResult = await searchDogs(params);
-      const { resultIds, total } = searchResult;
-      setTotal(total);
-      setFrom(newFrom);
-
-      const fetchedDogs = await fetchDogsByIds(resultIds);
-      setDogs(fetchedDogs);
-    } catch (err) {
-      console.error("Failed to search dogs:", err);
-      setError("Failed to search dogs. Please try again.");
-    }
-  };
+  const handleSearch = useCallback(
+    async (newFrom = 0) => {
+      setError(null);
+      try {
+        const params = buildSearchParams(newFrom);
+        const searchResult = await searchDogs(params);
+        const { resultIds, total } = searchResult;
+        setTotal(total);
+        setFrom(newFrom);
+        const fetchedDogs = await fetchDogsByIds(resultIds);
+        setDogs(fetchedDogs);
+      } catch (err) {
+        console.error("Failed to search dogs:", err);
+        setError("Failed to search dogs. Please try again.");
+      }
+    },
+    [buildSearchParams]
+  );
 
   // Pagination handlers
   const handlePrev = () => {
@@ -96,8 +105,7 @@ const SearchPage = () => {
 
   useEffect(() => {
     handleSearch(from);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [sortField, sortOrder]);
+  }, [sortField, sortOrder, handleSearch, from]);
 
   const handleToggleFavorite = (dogId: string) => {
     if (favorites.includes(dogId)) {

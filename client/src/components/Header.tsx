@@ -1,10 +1,15 @@
 import { Link, useNavigate } from "react-router-dom";
-import { useUserContext } from "../context/useUserContext";
+import { useUserContext } from "../context/User/useUserContext";
 import { logout } from "../api";
 
 const Header = () => {
   const { isAuthenticated, userName, clearUserInfo } = useUserContext();
   const navigate = useNavigate();
+  const navLinks = [
+    { to: "/search", text: "Search" },
+    { to: "/favorites", text: "Favorites" },
+    { to: "/adopt", text: "Adopt" },
+  ];
 
   const handleLogout = async () => {
     try {
@@ -22,22 +27,16 @@ const Header = () => {
       <div className="flex items-center gap-4">
         <h1 className="text-xl font-bold">Fetch Dogs</h1>
         {isAuthenticated && (
-          <nav>
-            <Link
-              to="/search"
-              className="text-gray-700 hover:text-teal-600 mr-4"
-            >
-              Search
-            </Link>
-            <Link
-              to="/favorites"
-              className="text-gray-700 hover:text-teal-600 mr-4"
-            >
-              Favorites
-            </Link>
-            <Link to="/adopt" className="text-gray-700 hover:text-teal-600">
-              Adopt
-            </Link>
+          <nav className="space-x-4">
+            {navLinks.map((link) => (
+              <Link
+                key={link.to}
+                to={link.to}
+                className="text-gray-700 hover:text-teal-600"
+              >
+                {link.text}
+              </Link>
+            ))}
           </nav>
         )}
       </div>
