@@ -1,30 +1,12 @@
-import { FC } from "react";
 import Select from "react-select";
+import { SearchControlsProps } from "../../types";
 
 interface Option {
   value: string;
   label: string;
 }
 
-interface SearchControlsProps {
-  allBreeds: string[];
-  selectedBreeds: string[];
-  onBreedChange: (breeds: string[]) => void;
-  sortField: "breed" | "name" | "age";
-  onSortFieldChange: (field: "breed" | "name" | "age") => void;
-  sortOrder: "asc" | "desc";
-  onSortOrderChange: (order: "asc" | "desc") => void;
-  onSearch: () => void;
-  onResetFilters: () => void;
-  ageMin?: number;
-  ageMax?: number;
-  onAgeMinChange: (value: number | undefined) => void;
-  onAgeMaxChange: (value: number | undefined) => void;
-  zipCodes: string;
-  onZipCodesChange: (value: string) => void;
-}
-
-const SearchControls: FC<SearchControlsProps> = ({
+const SearchControls = ({
   allBreeds,
   selectedBreeds,
   onBreedChange,
@@ -40,7 +22,7 @@ const SearchControls: FC<SearchControlsProps> = ({
   onAgeMaxChange,
   zipCodes,
   onZipCodesChange,
-}) => {
+}: SearchControlsProps) => {
   // Convert allBreeds into options for react-select
   const options: Option[] = allBreeds.map((breed) => ({
     value: breed,

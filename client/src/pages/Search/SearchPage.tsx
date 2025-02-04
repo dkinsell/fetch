@@ -1,20 +1,12 @@
-import { FC, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { getBreeds, searchDogs, fetchDogsByIds } from "../../api";
 import { useFavoritesContext } from "../../context/useFavoritesContext";
 import SearchControls from "./SearchControls";
 import PaginationControls from "./PaginationControls";
 import DogList from "./DogList";
+import { Dog } from "../../types";
 
-interface Dog {
-  id: string;
-  img: string;
-  name: string;
-  age: number;
-  zip_code: string;
-  breed: string;
-}
-
-const SearchPage: FC = () => {
+const SearchPage = () => {
   // Favorites from global context
   const { favorites, addFavorite, removeFavorite } = useFavoritesContext();
 

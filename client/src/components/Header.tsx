@@ -1,9 +1,8 @@
-import { FC } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useUserContext } from "../context/useUserContext";
 import { logout } from "../api";
 
-const Header: FC = () => {
+const Header = () => {
   const { isAuthenticated, userName, clearUserInfo } = useUserContext();
   const navigate = useNavigate();
 
@@ -30,8 +29,14 @@ const Header: FC = () => {
             >
               Search
             </Link>
-            <Link to="/favorites" className="text-gray-700 hover:text-teal-600">
+            <Link
+              to="/favorites"
+              className="text-gray-700 hover:text-teal-600 mr-4"
+            >
               Favorites
+            </Link>
+            <Link to="/adopt" className="text-gray-700 hover:text-teal-600">
+              Adopt
             </Link>
           </nav>
         )}

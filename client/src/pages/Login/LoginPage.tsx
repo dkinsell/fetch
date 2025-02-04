@@ -1,9 +1,9 @@
-import React, { FC, useState } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useUserContext } from "../../context/useUserContext";
 import { login } from "../../api";
 
-const LoginPage: FC = () => {
+const LoginPage = () => {
   const navigate = useNavigate();
   const { setUserInfo } = useUserContext();
 

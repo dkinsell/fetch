@@ -1,12 +1,12 @@
-import { FC } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 import LoginPage from "./pages/Login/LoginPage";
 import SearchPage from "./pages/Search/SearchPage";
 import FavoritesPage from "./pages/Favorites/FavoritesPage";
+import AdoptionPage from "./pages/Adoption/AdoptionPage";
 import Layout from "./components/Layout";
 import { useUserContext } from "./context/useUserContext";
 
-const App: FC = () => {
+const App = () => {
   const { isAuthenticated } = useUserContext();
 
   return (
@@ -29,6 +29,16 @@ const App: FC = () => {
           element={
             isAuthenticated ? (
               <FavoritesPage />
+            ) : (
+              <Navigate to="/login" replace />
+            )
+          }
+        />
+        <Route
+          path="/adopt"
+          element={
+            isAuthenticated ? (
+              <AdoptionPage />
             ) : (
               <Navigate to="/login" replace />
             )

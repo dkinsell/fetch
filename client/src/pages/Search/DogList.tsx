@@ -1,13 +1,4 @@
-import { FC } from "react";
-
-interface Dog {
-  id: string;
-  img: string;
-  name: string;
-  age: number;
-  zip_code: string;
-  breed: string;
-}
+import { Dog } from "../../types";
 
 interface DogListProps {
   dogs: Dog[];
@@ -15,7 +6,7 @@ interface DogListProps {
   onToggleFavorite: (dogId: string) => void;
 }
 
-const DogList: FC<DogListProps> = ({ dogs, favorites, onToggleFavorite }) => {
+const DogList = ({ dogs, favorites, onToggleFavorite }: DogListProps) => {
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
       {dogs.map((dog) => {

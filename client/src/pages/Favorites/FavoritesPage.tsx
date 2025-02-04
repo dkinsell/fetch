@@ -1,18 +1,12 @@
-import { FC, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { fetchDogsByIds, getMatch } from "../../api";
+import { useNavigate } from "react-router-dom";
 import { useFavoritesContext } from "../../context/useFavoritesContext";
+import { Dog } from "../../types";
 
-interface Dog {
-  id: string;
-  img: string;
-  name: string;
-  age: number;
-  zip_code: string;
-  breed: string;
-}
-
-const FavoritesPage: FC = () => {
+const FavoritesPage = () => {
   const { favorites, removeFavorite } = useFavoritesContext();
+  const navigate = useNavigate();
   const [favoriteDogs, setFavoriteDogs] = useState<Dog[]>([]);
   const [matchDog, setMatchDog] = useState<Dog | null>(null);
   const [loadingMatch, setLoadingMatch] = useState<boolean>(false);
@@ -76,7 +70,7 @@ const FavoritesPage: FC = () => {
 
       {/* Favorites Grid */}
       {favoriteDogs.length === 0 ? (
-        <div className="max-w-4xl mx-auto text-center p-12 bg-white rounded-xl shadow-sm">
+        <div className="max-w-4xl mx-auto text-center p-12 bg-white rounded-xl shadow-sm mb-12">
           <p className="text-slate-500 text-lg">
             No favorites yet. Fall in love with some pups and they'll appear
             here!
@@ -204,6 +198,14 @@ const FavoritesPage: FC = () => {
                   </p>
                 </div>
               </div>
+            </div>
+            <div className="mt-4 text-center">
+              <button
+                onClick={() => navigate("/adopt")}
+                className="px-8 py-3 rounded-lg font-medium bg-teal-600 hover:bg-teal-700 text-white transition"
+              >
+                Ready to Adopt?
+              </button>
             </div>
           </div>
         )}

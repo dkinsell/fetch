@@ -1,20 +1,12 @@
-import { FC } from "react";
+import { PaginationControlsProps } from "../../types";
 
-interface PaginationControlsProps {
-  from: number;
-  size: number;
-  total: number;
-  onPrev: () => void;
-  onNext: () => void;
-}
-
-const PaginationControls: FC<PaginationControlsProps> = ({
+const PaginationControls = ({
   from,
   size,
   total,
   onPrev,
   onNext,
-}) => {
+}: PaginationControlsProps) => {
   return (
     <div className="bg-white rounded-xl shadow-sm p-4 flex justify-between items-center">
       <button
