@@ -1,3 +1,4 @@
+// src/pages/Search/DogList.tsx
 import { FC } from "react";
 
 interface Dog {
@@ -30,19 +31,21 @@ const DogList: FC<DogListProps> = ({ dogs, favorites, onToggleFavorite }) => {
             <p className="text-gray-700">Age: {dog.age}</p>
             <p className="text-gray-700">ZIP: {dog.zip_code}</p>
             {dog.img && (
-              <img
-                src={dog.img}
-                alt={dog.name}
-                className="w-full h-40 object-cover my-2 rounded"
-              />
+              <div className="w-full aspect-[4/3] overflow-hidden my-2 rounded">
+                <img
+                  src={dog.img}
+                  alt={dog.name}
+                  className="w-full h-full object-contain"
+                />
+              </div>
             )}
             <button
               onClick={() => onToggleFavorite(dog.id)}
-              className={`mt-auto py-2 rounded ${
+              className={`mt-auto py-2 rounded transition text-white ${
                 isFav
                   ? "bg-red-500 hover:bg-red-600"
                   : "bg-green-500 hover:bg-green-600"
-              } text-white transition`}
+              }`}
             >
               {isFav ? "Remove Favorite" : "Add Favorite"}
             </button>
