@@ -1,3 +1,4 @@
+// Define the Dog type
 export interface Dog {
   id: string;
   img: string;
@@ -7,6 +8,7 @@ export interface Dog {
   breed: string;
 }
 
+// Define the PaginationControlsProps type
 export interface PaginationControlsProps {
   from: number;
   size: number;
@@ -15,6 +17,7 @@ export interface PaginationControlsProps {
   onNext: () => void;
 }
 
+// Define the SearchControlsProps type
 export interface SearchControlsProps {
   allBreeds: string[];
   selectedBreeds: string[];

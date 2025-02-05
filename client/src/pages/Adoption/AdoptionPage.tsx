@@ -1,6 +1,9 @@
+// This component displays information about the adoption process and a thank you message from Olly
+
 const AdoptionPage = () => {
   return (
     <div className="p-6 max-w-3xl mx-auto space-y-8">
+      {/* Adoption process section */}
       <div className="bg-white rounded-xl shadow-sm p-6">
         <h2 className="text-3xl font-bold text-slate-800 mb-4 text-center">
           How to Adopt Your New Companion
@@ -17,6 +20,7 @@ const AdoptionPage = () => {
           <li>Take your new family member home!</li>
         </ol>
       </div>
+      {/* Thank you message section */}
       <div className="bg-white rounded-xl shadow-sm p-6 text-center">
         <h3 className="text-2xl font-bold text-slate-800 mb-4">
           A thank you from Olly
@@ -26,7 +30,7 @@ const AdoptionPage = () => {
           on his first birthday (extra I know) to show my appreciation.
         </p>
         <img
-          src="/Olly2.jpg"
+          src="/Olly4.jpg"
           alt="My Dog"
           className="w-full h-auto rounded-xl shadow-sm mx-auto"
         />

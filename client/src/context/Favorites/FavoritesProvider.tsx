@@ -1,6 +1,7 @@
 import { FC, useState, ReactNode } from "react";
 import { FavoritesContext } from "./FavoritesContext";
 
+// Provider component for the Favorites context
 export const FavoritesProvider: FC<{ children: ReactNode }> = ({
   children,
 }) => {

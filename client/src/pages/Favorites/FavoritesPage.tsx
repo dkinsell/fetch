@@ -5,6 +5,7 @@ import { useFavoritesContext } from "../../context/Favorites/useFavoritesContext
 import { Dog } from "../../types";
 import DogCard from "../../components/DogCard";
 
+// This component displays the user's favorite dogs and allows them to generate a match
 const FavoritesPage = () => {
   const { favorites, removeFavorite } = useFavoritesContext();
   const navigate = useNavigate();
@@ -13,6 +14,7 @@ const FavoritesPage = () => {
   const [loadingMatch, setLoadingMatch] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
 
+  // Load the user's favorite dogs when the component mounts
   useEffect(() => {
     const loadFavorites = async () => {
       if (favorites.length > 0) {
@@ -34,6 +36,7 @@ const FavoritesPage = () => {
     removeFavorite(dogId);
   };
 
+  // Generate a match for the user's favorite dogs
   const handleGenerateMatch = async () => {
     if (favorites.length === 0) return;
     setLoadingMatch(true);
@@ -102,6 +105,7 @@ const FavoritesPage = () => {
                 : "bg-indigo-600 hover:bg-indigo-700 text-white"
             }`}
           >
+            {/* Loading spinner */}
             {loadingMatch ? (
               <span className="flex items-center justify-center gap-2">
                 <svg
@@ -121,6 +125,7 @@ const FavoritesPage = () => {
                   <path
                     className="opacity-75"
                     fill="currentColor"
+                    // Animation for the spinner
                     d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
                   ></path>
                 </svg>

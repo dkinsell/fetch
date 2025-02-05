@@ -2,6 +2,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { useUserContext } from "../context/User/useUserContext";
 import { logout } from "../api";
 
+// This component renders the site's header, including the logo/title and navigation links.
+
 const Header = () => {
   const { isAuthenticated, userName, clearUserInfo } = useUserContext();
   const navigate = useNavigate();

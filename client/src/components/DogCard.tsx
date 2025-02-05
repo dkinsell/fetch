@@ -1,11 +1,15 @@
+// This component displays an individual dog's information along with an action button.
+import React from "react";
 import { Dog } from "../types";
 
+// DogCardProps defines the properties for the DogCard component.
 interface DogCardProps {
-  dog: Dog;
+  dog: Dog; // Dog object containing id, img, name, age, zip_code, and breed.
   buttonText: string;
   onAction: (dogId: string) => void;
 }
 
+// Functional component that renders dog details and an action button.
 const DogCard = ({ dog, buttonText, onAction }: DogCardProps) => {
   return (
     <div className="group bg-white rounded-xl shadow-sm hover:shadow-md transition-all duration-300 ease-out flex flex-col">
@@ -46,4 +50,5 @@ const DogCard = ({ dog, buttonText, onAction }: DogCardProps) => {
   );
 };
 
-export default DogCard;
+// Export DogCard as a memoized component to optimize rendering performance.
+export default React.memo(DogCard);

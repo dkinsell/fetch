@@ -6,6 +6,7 @@ import PaginationControls from "./PaginationControls";
 import DogList from "./DogList";
 import { Dog } from "../../types";
 
+// Component displays a search page with a list of dogs and pagination controls
 const SearchPage = () => {
   // Favorites from global context
   const { favorites, addFavorite, removeFavorite } = useFavoritesContext();
@@ -71,6 +72,7 @@ const SearchPage = () => {
     [selectedBreeds, sortField, sortOrder, ageMin, ageMax, zipCodes, size]
   );
 
+  // Handle the search functionality
   const handleSearch = useCallback(
     async (newFrom = 0) => {
       setError(null);
@@ -103,10 +105,12 @@ const SearchPage = () => {
     }
   };
 
+  // Handle the search functionality when the sort field or order changes
   useEffect(() => {
     handleSearch(from);
   }, [sortField, sortOrder, handleSearch, from]);
 
+  // Handle the toggle favorite functionality
   const handleToggleFavorite = (dogId: string) => {
     if (favorites.includes(dogId)) {
       removeFavorite(dogId);

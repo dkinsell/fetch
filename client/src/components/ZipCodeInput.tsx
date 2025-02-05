@@ -7,7 +7,7 @@ interface ZipCodeInputProps {
   placeholder?: string;
   className?: string;
 }
-
+// Component that renders a zip code input field with a placeholder and optional class name
 const ZipCodeInput = ({
   initialValue,
   onBlurChange,
@@ -32,4 +32,5 @@ const ZipCodeInput = ({
   );
 };
 
+// Export as a memoized component to optimize rendering performance
 export default React.memo(ZipCodeInput);

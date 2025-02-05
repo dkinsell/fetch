@@ -1,5 +1,6 @@
 import { createContext } from "react";
 
+// Define the context properties for the Favorites context
 export interface FavoritesContextProps {
   favorites: string[];
   addFavorite: (dogId: string) => void;
@@ -7,6 +8,7 @@ export interface FavoritesContextProps {
   clearFavorites: () => void;
 }
 
+// Create the Favorites context
 export const FavoritesContext = createContext<
   FavoritesContextProps | undefined
 >(undefined);

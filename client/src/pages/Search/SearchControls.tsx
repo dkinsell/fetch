@@ -8,6 +8,7 @@ interface Option {
   label: string;
 }
 
+// Component that displays the search controls for the search page
 const SearchControls = ({
   allBreeds,
   selectedBreeds,

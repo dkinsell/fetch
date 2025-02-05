@@ -1,5 +1,8 @@
+// API Abstraction file for Fetch Dogs
+// Centralizes all API calls, base URL, and default fetch options for communicating with the backend.
 const BASE_URL = "https://frontend-take-home-service.fetch.com";
 
+// Default options for fetch requests
 const defaultFetchOptions: RequestInit = {
   credentials: "include",
   headers: {
@@ -7,6 +10,7 @@ const defaultFetchOptions: RequestInit = {
   },
 };
 
+// Logs in a user by sending a POST request with the provided name and email
 export const login = async (name: string, email: string): Promise<void> => {
   const response = await fetch(`${BASE_URL}/auth/login`, {
     ...defaultFetchOptions,
@@ -19,6 +23,7 @@ export const login = async (name: string, email: string): Promise<void> => {
   }
 };
 
+// Logs out the current user by sending a POST request to the logout endpoint
 export const logout = async (): Promise<void> => {
   const response = await fetch(`${BASE_URL}/auth/logout`, {
     ...defaultFetchOptions,
@@ -30,6 +35,7 @@ export const logout = async (): Promise<void> => {
   }
 };
 
+// Fetches a list of dog breeds from the API
 export const getBreeds = async (): Promise<string[]> => {
   const response = await fetch(`${BASE_URL}/dogs/breeds`, {
     ...defaultFetchOptions,
@@ -44,6 +50,8 @@ export const getBreeds = async (): Promise<string[]> => {
   return breeds;
 };
 
+// Searches for dogs using the provided search parameters
+// Returns paginated results including a list of dogs and the total count
 export const searchDogs = async (params: {
   breeds?: string[];
   zipCodes?: string[];
@@ -94,6 +102,7 @@ export const searchDogs = async (params: {
   return response.json();
 };
 
+// Fetches detailed dog data for the provided list of dog IDs.
 export const fetchDogsByIds = async (
   dogIds: string[]
 ): Promise<
@@ -119,6 +128,7 @@ export const fetchDogsByIds = async (
   return response.json();
 };
 
+// Retrieves a match for the provided dog IDs
 export const getMatch = async (dogIds: string[]): Promise<string> => {
   const response = await fetch(`${BASE_URL}/dogs/match`, {
     ...defaultFetchOptions,

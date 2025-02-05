@@ -8,6 +8,7 @@ interface UserContextProps {
   clearUserInfo: () => void;
 }
 
+// Create the User context
 export const UserContext = createContext<UserContextProps | undefined>(
   undefined
 );

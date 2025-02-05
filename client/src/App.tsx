@@ -7,18 +7,22 @@ import Layout from "./components/Layout";
 import { useUserContext } from "./context/User/useUserContext";
 import ProtectedRoute from "./components/ProtectedRoute";
 
+// Main App component that defines the routes and layout for the application
 const App = () => {
   const { isAuthenticated } = useUserContext();
 
   return (
+    // Layout component wraps the main content of the app with common layout elements (e.g. header, footer, container styling)
     <Layout>
       <Routes>
+        {/* Login page route */}
         <Route
           path="/login"
           element={
             !isAuthenticated ? <LoginPage /> : <Navigate to="/search" replace />
           }
         />
+        {/* Search page route */}
         <Route
           path="/search"
           element={
@@ -27,6 +31,7 @@ const App = () => {
             </ProtectedRoute>
           }
         />
+        {/* Favorites page route */}
         <Route
           path="/favorites"
           element={
@@ -35,6 +40,7 @@ const App = () => {
             </ProtectedRoute>
           }
         />
+        {/* Adoption page route */}
         <Route
           path="/adopt"
           element={
@@ -43,6 +49,7 @@ const App = () => {
             </ProtectedRoute>
           }
         />
+        {/* Catch-all route for invalid paths */}
         <Route
           path="*"
           element={
