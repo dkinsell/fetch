@@ -170,7 +170,10 @@ const FavoritesPage = () => {
             </div>
             <div className="mt-4 text-center">
               <button
-                onClick={() => navigate("/adopt")}
+                onClick={() => {
+                  window.scrollTo(0, 0);
+                  navigate("/adopt");
+                }}
                 className="px-8 py-3 rounded-lg font-medium bg-teal-600 hover:bg-teal-700 text-white transition"
               >
                 Ready to Adopt?
