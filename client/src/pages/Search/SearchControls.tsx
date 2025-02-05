@@ -1,5 +1,7 @@
 import Select from "react-select";
 import { SearchControlsProps } from "../../types";
+import React from "react";
+import ZipCodeInput from "../../components/ZipCodeInput";
 
 interface Option {
   value: string;
@@ -14,7 +16,6 @@ const SearchControls = ({
   onSortFieldChange,
   sortOrder,
   onSortOrderChange,
-  onSearch,
   onResetFilters,
   ageMin,
   ageMax,
@@ -22,7 +23,7 @@ const SearchControls = ({
   onAgeMaxChange,
   zipCodes,
   onZipCodesChange,
-}: SearchControlsProps) => {
+}: Omit<SearchControlsProps, "onSearch">) => {
   // Convert allBreeds into options for react-select
   const options: Option[] = allBreeds.map((breed) => ({
     value: breed,
@@ -43,7 +44,15 @@ const SearchControls = ({
     <div className="flex flex-col gap-4">
       {/* Filter Options */}
       <Card>
-        <h3 className="text-lg font-semibold mb-2">Filter Options</h3>
+        <div className="flex items-center gap-4 mb-2">
+          <h3 className="text-lg font-semibold">Filter Options</h3>
+          <button
+            onClick={onResetFilters}
+            className="px-4 py-2 bg-gray-300 text-gray-800 rounded-lg hover:bg-gray-400 transition"
+          >
+            Reset Filters
+          </button>
+        </div>
         <div className="flex flex-wrap gap-4 items-center">
           {/* Multi-Select for Breeds */}
           <div className="flex flex-col">
@@ -102,11 +111,10 @@ const SearchControls = ({
             <label htmlFor="zip-codes" className="mb-1 font-medium">
               ZIP Codes
             </label>
-            <input
+            <ZipCodeInput
               id="zip-codes"
-              type="text"
-              value={zipCodes}
-              onChange={(e) => onZipCodesChange(e.target.value)}
+              initialValue={zipCodes}
+              onBlurChange={onZipCodesChange}
               placeholder="Separate with commas"
               className="w-40 p-2 border border-gray-300 rounded"
             />
@@ -153,24 +161,8 @@ const SearchControls = ({
           </div>
         </div>
       </Card>
-
-      {/* Action Buttons */}
-      <div className="flex gap-4">
-        <button
-          onClick={onSearch}
-          className="px-4 py-2 bg-teal-600 text-white rounded-lg hover:bg-teal-700 transition"
-        >
-          Search
-        </button>
-        <button
-          onClick={onResetFilters}
-          className="px-4 py-2 bg-gray-300 text-gray-800 rounded-lg hover:bg-gray-400 transition"
-        >
-          Reset Filters
-        </button>
-      </div>
     </div>
   );
 };
 
-export default SearchControls;
+export default React.memo(SearchControls);

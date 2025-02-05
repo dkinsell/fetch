@@ -137,7 +137,6 @@ const SearchPage = () => {
           onSortFieldChange={setSortField}
           sortOrder={sortOrder}
           onSortOrderChange={setSortOrder}
-          onSearch={() => handleSearch(0)}
           onResetFilters={handleResetFilters}
           ageMin={ageMin}
           ageMax={ageMax}

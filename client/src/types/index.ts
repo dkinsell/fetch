@@ -1,5 +1,3 @@
-// Define commonly used types here
-
 export interface Dog {
   id: string;
   img: string;
@@ -25,7 +23,6 @@ export interface SearchControlsProps {
   onSortFieldChange: (field: "breed" | "name" | "age") => void;
   sortOrder: "asc" | "desc";
   onSortOrderChange: (order: "asc" | "desc") => void;
-  onSearch: () => void;
   onResetFilters: () => void;
   ageMin?: number;
   ageMax?: number;
