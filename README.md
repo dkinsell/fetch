@@ -30,10 +30,10 @@ You can also access the app online at:
 ### Technologies Used
 
 - **React & React Hooks:** The frontend is implemented entirely in React with TypeScript. Hooks such as `useState`, `useEffect`, and `useContext` are used to manage state and side effects.
-- **Context API:** Global state management for authentication and favorites is handled by React Context, simplifying data flow across components.
-- **React Router:** Client-side routing is managed by React Router, which enables smooth transitions between pages and protects certain routes.
-- **REST API Integration:** The app consumes the provided backend API to fetch dog data, available breeds, search results, and handle user authentication.
-- **Tailwind CSS:** Styling is done with Tailwind CSS, offering a utility-first approach that makes the UI responsive and easily customizable.
+- **Context API:** Global state management for authentication and favorites is handled by React Context, simplifying data flow across components
+- **React Router:** Client-side routing is managed by React Router, which enables smooth transitions between pages and protects certain routes
+- **REST API Integration:** The app consumes the provided backend API to fetch dog data, available breeds, search results, and handle user authentication
+- **Tailwind:** Styling is done with Tailwind, offering a utility-first approach that makes the UI responsive and easily customizable
 
 ### Application Functionality
 
@@ -48,8 +48,8 @@ You can also access the app online at:
 **useContext vs Local State:**  
 I chose to use the Context API for global state management of authentication and favorites because it allows for seamless sharing of state across the app without prop drilling. This approach is more scalable and maintainable than relying solely on local component state should the app need to grow in the future.
 
-**Tailwind CSS vs MUI:**  
-Tailwind CSS was selected for its utility-first approach, which provides high flexibility and rapid styling customization. Although MUI offers comprehensive pre-built components, in this case I felt Tailwind was more appropriate since it gave me more control to create a custom look.
+**Tailwind vs MUI:**  
+Tailwind was selected for its utility-first approach, which provides high flexibility and rapid styling customization. Although MUI offers comprehensive pre-built components, in this case I felt Tailwind was more appropriate since it gave me more control to create a custom look.
 
 **API Abstraction:**  
 The API abstraction is implemented in the file `client/src/api/index.ts`. The goal of centralizing all API calls in one modul was to ensure a consistent approach to data fetching, simplify error handling, and making it easier to update endpoints across the app as it scales.
