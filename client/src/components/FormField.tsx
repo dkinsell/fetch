@@ -1,6 +1,5 @@
 // This component renders a form field with a label and an input element.
 // It receives props for the label, value, onChange handler, input type, and an optional placeholder.
-import React from "react";
 
 // Define the properties for the FormField component.
 interface FormFieldProps {

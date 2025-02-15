@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState } from "react";
 
 interface ZipCodeInputProps {
   initialValue: string;
@@ -7,7 +7,7 @@ interface ZipCodeInputProps {
   placeholder?: string;
   className?: string;
 }
-// Component that renders a zip code input field with a placeholder and optional class name
+
 const ZipCodeInput = ({
   initialValue,
   onBlurChange,
@@ -16,11 +16,9 @@ const ZipCodeInput = ({
   className,
 }: ZipCodeInputProps) => {
   const [value, setValue] = useState(initialValue);
-  const inputRef = useRef<HTMLInputElement>(null);
 
   return (
     <input
-      ref={inputRef}
       id={id}
       type="text"
       value={value}
@@ -32,5 +30,4 @@ const ZipCodeInput = ({
   );
 };
 
-// Export as a memoized component to optimize rendering performance
 export default React.memo(ZipCodeInput);

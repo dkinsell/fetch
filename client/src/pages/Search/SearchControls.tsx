@@ -24,7 +24,7 @@ const SearchControls = ({
   onAgeMaxChange,
   zipCodes,
   onZipCodesChange,
-}: Omit<SearchControlsProps, "onSearch">) => {
+}: SearchControlsProps) => {
   // Convert allBreeds into options for react-select
   const options: Option[] = allBreeds.map((breed) => ({
     value: breed,
