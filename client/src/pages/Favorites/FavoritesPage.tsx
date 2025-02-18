@@ -14,7 +14,7 @@ const FavoritesPage = () => {
   const [loadingMatch, setLoadingMatch] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
 
-  // Load the user's favorite dogs when the component mounts
+  // Fetch and update favorite dogs whenever the favorites list changes
   useEffect(() => {
     const loadFavorites = async () => {
       if (favorites.length > 0) {

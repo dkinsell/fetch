@@ -12,7 +12,7 @@ interface FormFieldProps {
   placeholder?: string;
 }
 
-// Functional component that renders a labeled input field.
+// Component that renders a labeled input field.
 const FormField = ({
   id,
   label,

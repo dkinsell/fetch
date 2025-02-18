@@ -69,7 +69,7 @@ const SearchPage = () => {
       }
       return params;
     },
-    [selectedBreeds, sortField, sortOrder, ageMin, ageMax, zipCodes, size]
+    [selectedBreeds, sortField, sortOrder, ageMin, ageMax, zipCodes]
   );
 
   // Handle the search functionality
