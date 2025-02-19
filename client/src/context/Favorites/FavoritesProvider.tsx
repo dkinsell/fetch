@@ -5,13 +5,17 @@ import { FavoritesContext } from "./FavoritesContext";
 export const FavoritesProvider: FC<{ children: ReactNode }> = ({
   children,
 }) => {
-  const [favorites, setFavorites] = useState<string[]>([]);
+  const [favorites, setFavorites] = useState<string[]>(
+    JSON.parse(localStorage.getItem("favoritesArray") || "[]")
+  );
 
   // Add a dog ID to the array if it's not already there
   const addFavorite = (dogId: string) => {
     setFavorites((prev) => {
       if (!prev.includes(dogId)) {
-        return [...prev, dogId];
+        const newArr = [...prev, dogId];
+        localStorage.setItem("favoritesArray", JSON.stringify(newArr));
+        return newArr;
       }
       return prev;
     });
