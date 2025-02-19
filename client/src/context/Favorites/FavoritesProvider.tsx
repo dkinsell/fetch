@@ -1,32 +1,44 @@
-import { FC, useState, ReactNode } from "react";
+import { FC, useState, ReactNode, useEffect } from "react";
 import { FavoritesContext } from "./FavoritesContext";
 
-// Provider component for the Favorites context
+const STORAGE_KEY = "favoritesArray";
+
 export const FavoritesProvider: FC<{ children: ReactNode }> = ({
   children,
 }) => {
-  const [favorites, setFavorites] = useState<string[]>(
-    JSON.parse(localStorage.getItem("favoritesArray") || "[]")
-  );
+  // Initialize state from localStorage
+  const [favorites, setFavorites] = useState<string[]>(() => {
+    try {
+      const stored = localStorage.getItem(STORAGE_KEY);
+      return stored ? JSON.parse(stored) : [];
+    } catch (error) {
+      console.error("Failed to parse favorites from localStorage:", error);
+      return [];
+    }
+  });
 
-  // Add a dog ID to the array if it's not already there
+  // Sync localStorage whenever favorites change
+  useEffect(() => {
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(favorites));
+    } catch (error) {
+      console.error("Failed to save favorites to localStorage:", error);
+    }
+  }, [favorites]);
+
   const addFavorite = (dogId: string) => {
     setFavorites((prev) => {
       if (!prev.includes(dogId)) {
-        const newArr = [...prev, dogId];
-        localStorage.setItem("favoritesArray", JSON.stringify(newArr));
-        return newArr;
+        return [...prev, dogId];
       }
       return prev;
     });
   };
 
-  // Remove a dog ID if it exists in the array
   const removeFavorite = (dogId: string) => {
     setFavorites((prev) => prev.filter((id) => id !== dogId));
   };
 
-  // Clear the entire favorites array
   const clearFavorites = () => {
     setFavorites([]);
   };
